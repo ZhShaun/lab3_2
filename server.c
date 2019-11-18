@@ -165,7 +165,7 @@ void file_listing_handler(int sockfd) {
         //server client 間如何達成協議，彼此知道要write/read幾次為關鍵！
       **/
       buf = pDirent->d_name;
-            
+
 
   }
 
