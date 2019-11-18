@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
   bzero(&svr_addr, sizeof(svr_addr));
   svr_addr.sin_family = PF_INET/* Protocol stack */;
   svr_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  svr_addr.sin_port = htnos(8888)/* Bind port */;
+  svr_addr.sin_port = htons(8888)/* Bind port */;
 
   /****/
 
@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
   **/
   int bind_result = bind(svr_fd, &svr_addr, sizeof(svr_addr));
   if (bind_result < 0) { // binding fails
-    peror("Binding failed!");
+    perror("Binding failed!");
   }
   /****/
 
@@ -164,8 +164,8 @@ void file_listing_handler(int sockfd) {
         send filenames to client
         //server client 間如何達成協議，彼此知道要write/read幾次為關鍵！
       **/
-      buf = pDirent->d_name;
-            
+      strcpy(buf, pDirent->d_name);
+      printf("file name: %s\n", buf);
 
   }
 
