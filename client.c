@@ -76,13 +76,18 @@ void connection_handler (int sockfd) {
       read file list from server
       //server client 間如何達成協議，彼此知道要write/read幾次為關鍵！
     **/
-    int numOfFIle = 0;
-    printf("File list:\n");
-
+    int numOfFile = 0;
+ 
     memset(buf, '\0', MAX_SIZE);
     while (read(sockfd, buf, MAX_SIZE) > 0) {
-      if (strcmp(buf, "end") == 0)  break;
-      printf("%s\n", buf);
+      if (strcmp(buf, "end") == 0) {
+	  printf("transmission stoped!\n");
+	  break;
+      }
+      //numOfFile++;
+      
+      printf("%s", buf);
+      //if (numOfFile == 4) break;
       memset(buf, '\0', MAX_SIZE);
     }
 
