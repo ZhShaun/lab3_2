@@ -76,19 +76,21 @@ void connection_handler (int sockfd) {
       read file list from server
       //server client 間如何達成協議，彼此知道要write/read幾次為關鍵！
     **/
+    
     int numOfFile = 0;
- 
+
     memset(buf, '\0', MAX_SIZE);
     while (read(sockfd, buf, MAX_SIZE) > 0) {
       if (strcmp(buf, "end") == 0) {
-	  printf("transmission stoped!\n");
+	  //printf("transmission stoped!\n");
 	  break;
       }
-      //numOfFile++;
-      
+      if (buf[0] == 'e') {
+	printf("XXX:%s\n", buf);
+      }
       printf("%s", buf);
-      //if (numOfFile == 4) break;
       memset(buf, '\0', MAX_SIZE);
+      numOfFile++;
     }
 
 
@@ -148,7 +150,7 @@ void file_download_handler(int sockfd, char filename[]) {
           TODO 4:
           receive file data from server
         **/
-        read(sockfd, buf, MAX_SIZE);
+        read_byte = read(sockfd, buf, MAX_SIZE);
         /****/
 
         /* write file to local disk*/
