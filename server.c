@@ -177,6 +177,7 @@ void file_listing_handler(int sockfd) {
       
   }
 
+  memset(buf, '\0', MAX_SIZE);
   if (write(sockfd, "end", strlen("end")) < 0) {
     perror("Write failed");
   } 

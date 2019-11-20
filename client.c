@@ -83,6 +83,7 @@ void connection_handler (int sockfd) {
     while (read(sockfd, buf, MAX_SIZE) > 0) {
       if (strcmp(buf, "end") == 0)  break;
       printf("%s\n", buf);
+      memset(buf, '\0', MAX_SIZE);
     }
 
 
@@ -142,7 +143,7 @@ void file_download_handler(int sockfd, char filename[]) {
           TODO 4:
           receive file data from server
         **/
-        read(sockfd, buf, strlen(buf));
+        read(sockfd, buf, MAX_SIZE);
         /****/
 
         /* write file to local disk*/
