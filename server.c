@@ -214,7 +214,7 @@ void file_sending_handler(int sockfd, char filename[]) {
 
     memset(buf, '\0', MAX_SIZE);
     sprintf(buf, "%d", file_size);
-
+    
     /**
       TODO 6:
       send file size to client
