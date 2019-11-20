@@ -37,7 +37,7 @@ int main (int argc, char *argv[]) {
   **/
   bzero(&svr_addr, sizeof(svr_addr));
   svr_addr.sin_family = AF_INET;
-  svr_addr.sin_port = htons(argv[1]);
+  svr_addr.sin_port = htons(argv[2]);
   if (inet_pton(AF_INET, argv[1], &svr_addr.sin_addr) <= 0) {
      perror("Address converting fail with wrong address argument");
      return 0;
