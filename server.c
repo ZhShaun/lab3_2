@@ -137,8 +137,8 @@ void hello_msg_handler(int sockfd) {
   printf("[INFO] Send hello msg to client\n");
 
   /* send hello msg to client */
-  sprintf(buf, "%s", "[✓] Connect to server.\n[✓] Server reply!\n-----------\nFiles on server:\n");
-  if (write(sockfd, buf, MAX_SIZE) < 0) {
+  sprintf(buf, "%s", "[✓] Conne ct to server.\n[✓] Server reply!\n-----------\nFiles on server:\n");
+  if (write(sockfd, buf, strlen(buf)) < 0) {
       perror("Write failed!\n");
   }
 }
