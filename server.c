@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
       TODO 4:
       accept client connections
     **/
-    cli_fd = accept(svr_fd, &cli_addr, addr_len);
+    cli_fd = accept(svr_fd, &cli_addr, &addr_len);
     if (cli_fd < 0) {
       perror("Accept failed!");
     }

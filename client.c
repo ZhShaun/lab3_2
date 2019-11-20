@@ -80,7 +80,7 @@ void connection_handler (int sockfd) {
     printf("File list:\n");
 
     memset(buf, '\0', MAX_SIZE);
-    while (read(sockfd, buf, strlen(buf)) > 0) {
+    while (read(sockfd, buf, MAX_SIZE) > 0) {
       if (strcmp(buf, "end") == 0)  break;
       printf("%s\n", buf);
     }
