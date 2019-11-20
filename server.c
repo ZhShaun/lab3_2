@@ -178,7 +178,7 @@ void file_listing_handler(int sockfd) {
   }
 
   memset(buf, '\0', MAX_SIZE);
-  sprintf(buf, "%s", "end");
+  sprintf(buf, "%s", "end\0");
   if (write(sockfd, buf, strlen(buf)) < 0) {
     perror("Write failed");
   } 
@@ -227,20 +227,19 @@ void file_sending_handler(int sockfd, char filename[]) {
     /****/
 
     /* read file data and send to client */
-    write_sum = 0;
+        write_sum = 0;
     while (write_sum < file_size) {
-
-      /* read local file to buf */
       memset(buf, '\0', MAX_SIZE);
+      /* read local file to buf */
       write_byte = fread(&buf, sizeof(char), MAX_SIZE, fp);
 
       /**
         TODO 7:
         send file data to client
       **/
-      int n = read(sockfd, buf, MAX_SIZE);     
+      int n = write(sockfd, buf, strlen(buf));     
       if (n != write_byte) {
-	 printf("read:%d, fread:%d", n, write_byte);
+	 printf("write:%d, fread:%d", n, write_byte);
          perror("Write failed!");
       }
       /****/
