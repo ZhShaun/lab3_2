@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
   bzero(&svr_addr, sizeof(svr_addr));
   svr_addr.sin_family = PF_INET/* Protocol stack */;
   svr_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  svr_addr.sin_port = htons(argv[1])/* Bind port */;
+  svr_addr.sin_port = htons(atoi(argv[1]))/* Bind port */;
 
   /****/
 
@@ -137,8 +137,8 @@ void hello_msg_handler(int sockfd) {
   printf("[INFO] Send hello msg to client\n");
 
   /* send hello msg to client */
-  sprintf(buf, "%s", "[✓] Connect to server.\n[✓] Server reply!\n-----------\nFiles on server:\n");
-  if (write(sockfd, buf, MAX_SIZE) < 0) {
+  sprintf(buf, "%s", "[✓] Conne ct to server.\n[✓] Server reply!\n-----------\nFiles on server:\n");
+  if (write(sockfd, buf, strlen(buf)) < 0) {
       perror("Write failed!\n");
   }
 }
