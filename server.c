@@ -237,7 +237,7 @@ void file_sending_handler(int sockfd, char filename[]) {
         TODO 7:
         send file data to client
       **/
-      if (write(sockfd, buf, strlen(buf) != write_byte)) {
+      if (write(sockfd, buf, strlen(buf)) != write_byte) {
         perror("Write failed!");
       }
       /****/
