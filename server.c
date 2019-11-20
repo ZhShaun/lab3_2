@@ -43,10 +43,14 @@ int main(int argc, char **argv) {
     TODO 1:
     preparing sockaddr_in
   **/
+  if (argc <= 1) {
+    perror("Please enter port number!");
+  }
+
   bzero(&svr_addr, sizeof(svr_addr));
   svr_addr.sin_family = PF_INET/* Protocol stack */;
   svr_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  svr_addr.sin_port = htons(8888)/* Bind port */;
+  svr_addr.sin_port = htons(argv[1])/* Bind port */;
 
   /****/
 
