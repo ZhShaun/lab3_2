@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
   bzero(&svr_addr, sizeof(svr_addr));
   svr_addr.sin_family = PF_INET/* Protocol stack */;
   svr_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  svr_addr.sin_port = htons(argv[1])/* Bind port */;
+  svr_addr.sin_port = htons(atoi(argv[1]))/* Bind port */;
 
   /****/
 
