@@ -36,8 +36,8 @@ int main (int argc, char *argv[]) {
     preparing sockaddr_in
   **/
   bzero(&svr_addr, sizeof(svr_addr));
-  svr_addr.sin_family = /* protocol stack */;
-  svr_addr.sin_port = /* bind port */;
+  svr_addr.sin_family = AF_INET;
+  svr_addr.sin_port = htons(8888);
   if (inet_pton(AF_INET, argv[1], &svr_addr.sin_addr) <= 0) {
      perror("Address converting fail with wrong address argument");
      return 0;
@@ -76,6 +76,15 @@ void connection_handler (int sockfd) {
       read file list from server
       //server client 間如何達成協議，彼此知道要write/read幾次為關鍵！
     **/
+    int numOfFIle = 0;
+    printf("File list:\n");
+
+    memset(buf, '\0', MAX_SIZE);
+    while (read(sockfd, buf, strlen(buf)) > 0) {
+      if (strcmp(buf, "end") == 0)  break;
+      printf("%s\n", buf);
+    }
+
 
     /****/
 
@@ -88,7 +97,7 @@ void connection_handler (int sockfd) {
         /** TODO 3:
             send requested file name to server
         **/
-
+        write(sockfd, filename, strlen(filename)); 
         /****/
 
         /* download this file */
@@ -133,7 +142,7 @@ void file_download_handler(int sockfd, char filename[]) {
           TODO 4:
           receive file data from server
         **/
-
+        read(sockfd, buf, strlen(buf));
         /****/
 
         /* write file to local disk*/

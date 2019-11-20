@@ -164,11 +164,19 @@ void file_listing_handler(int sockfd) {
         send filenames to client
         //server client 間如何達成協議，彼此知道要write/read幾次為關鍵！
       **/
+      memset(buf, '\0', MAX_SIZE);
       strcpy(buf, pDirent->d_name);
-      printf("file name: %s\n", buf);
-
+      int write_bytes = write(sockfd, buf, strlen(buf));
+      if (write_bytes < 0) {
+        perror("Write failed");
+      }
+      
   }
 
+  if (write(sockfd, "end", strlen("end")) < 0) {
+    perror("Write failed");
+  } 
+  
   closedir(pDir);
   /****/
 }
@@ -206,6 +214,9 @@ void file_sending_handler(int sockfd, char filename[]) {
       TODO 6:
       send file size to client
     **/
+    if (write(sockfd, buf, strlen(buf)) < 0) {
+      perror("Write fail");
+    }
 
     /****/
 
@@ -221,7 +232,9 @@ void file_sending_handler(int sockfd, char filename[]) {
         TODO 7:
         send file data to client
       **/
-
+      if (write(sockfd, buf, strlen(buf) != write_byte)) {
+        perror("Write failed!");
+      }
       /****/
 
       write_sum += write_byte;
