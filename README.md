@@ -7,6 +7,7 @@
   2. Client sends a filename to server.
   3. Server transfers the requested file to client.
   4. Get back to step 2 and loop until ".exit" is entered.
+* Makefile provides *make* compiling *server.c*, *client.c* at once.
 * Note that minimun error proof is provided in **most** of the time.
 
 
