@@ -77,26 +77,27 @@ void connection_handler (int sockfd) {
       //server client 間如何達成協議，彼此知道要write/read幾次為關鍵！
     **/
     
-    int numOfFile = 0;
-
-    memset(buf, '\0', MAX_SIZE);
+        memset(buf, '\0', MAX_SIZE);
     while (read(sockfd, buf, MAX_SIZE) > 0) {
-      if (strcmp(buf, "end") == 0) {
-	  //printf("transmission stoped!\n");
-	  break;
+      const int endPos = strlen(buf) - 3;
+      const char* endOfTransfer = &buf[endPos];
+      if (strcmp(endOfTransfer, "end") == 0 ) {
+	if (strlen(buf) > 3) {
+	  char context[MAX_SIZE];
+	  strncpy(context, buf, endPos);
+          printf("%s", context);
+        } 
+	break;
       }
-      if (buf[0] == 'e') {
-	printf("XXX:%s\n", buf);
+      else {
+        printf("%s", buf);
       }
-      printf("%s", buf);
       memset(buf, '\0', MAX_SIZE);
-      numOfFile++;
     }
-
 
     /****/
 
-    printf("-----------\nEnter the filename: ");
+    printf("-----------\nEnter the filename (enter .exit to exit): ");
     while (scanf(" %s", filename) > 0) {
         if (strcmp(filename, ".exit") == 0) {
             break;
@@ -130,6 +131,7 @@ void file_download_handler(int sockfd, char filename[]) {
   memset(buf, '\0', MAX_SIZE);
   read(sockfd, buf, MAX_SIZE);
   printf("%s", buf);
+  if (strcmp(buf, "Download failed\n") == 0) return;
 
   /* receive file size */
   memset(buf, '\0', MAX_SIZE);
@@ -158,8 +160,8 @@ void file_download_handler(int sockfd, char filename[]) {
         read_sum += read_byte;
       }
       fclose(fp);
-
-      /* receive download complete message */
+     
+     /* receive download complete message */
       memset(buf, '\0', MAX_SIZE);
       read(sockfd, buf, MAX_SIZE);
       printf("%s", buf);

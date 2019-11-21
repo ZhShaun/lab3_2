@@ -169,16 +169,17 @@ void file_listing_handler(int sockfd) {
         //server client 間如何達成協議，彼此知道要write/read幾次為關鍵！
       **/
       memset(buf, '\0', MAX_SIZE);
-      sprintf(buf, "%s\n", pDirent->d_name); 
+      strcpy(buf, pDirent->d_name);
+      strcat(buf, "\n");
       int write_bytes = write(sockfd, buf, strlen(buf));
       if (write_bytes < 0) {
         perror("Write failed");
       }
-      
-  }
 
+  }
+  usleep(100000); // to make sure the client recieve the end message 
   memset(buf, '\0', MAX_SIZE);
-  sprintf(buf, "%s", "end\0");
+  sprintf(buf, "%s", "end");
   if (write(sockfd, buf, strlen(buf)) < 0) {
     perror("Write failed");
   } 
@@ -237,7 +238,7 @@ void file_sending_handler(int sockfd, char filename[]) {
         TODO 7:
         send file data to client
       **/
-      int n = write(sockfd, buf, strlen(buf));     
+      int n = write(sockfd, buf, write_byte);     
       if (n != write_byte) {
 	 printf("write:%d, fread:%d", n, write_byte);
          perror("Write failed!");
